@@ -47,7 +47,8 @@ stats = bt.optimize(
   maximize=optim_func, # Calling our custom function which would return the metric that we need to maximize.
   # We are ensuring to only look the combination in which upperBound values are greater than lowerBound values.
   # We can also make use of rsiWindow in it.
-  constraint=lambda param: param.upperBound > param.lowerBound
+  constraint=lambda param: param.upperBound > param.lowerBound,
+  # max_tries = 100 # This option is very useful for avoiding overfitting, from all combinations I would randomly select 100 combinations (not all) & then give result according to that.
 )
 
 # This piece of code is responsible for creating the folder & then saving the plot into that.
