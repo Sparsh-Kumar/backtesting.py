@@ -3,6 +3,7 @@
   - It is basically an approach to get most suitable values of the variables we
    are going to use in the strategy for getting like maximum or minimum particular statistical value like sharpe ratio, minimum loss etc.
   - We implement optimization is by using `optimize()` method instead of `run()` on `Backtest()` instance.
+  - You would be able to see the optimized values in the plot html that the code will generate.
 '''
 
 import datetime
