@@ -44,7 +44,7 @@ bt = Backtest(GOOG, RsiOscillator, cash=10000)
 stats, heatmap = bt.optimize(
   upperBound=range(55, 85, 5),
   lowerBound=range(10, 45, 5),
-  rsiWindow=range(10, 30, 2),
+  rsiWindow=14,
   maximize=optim_func, # Calling our custom function which would return the metric that we need to maximize.
   # We are ensuring to only look the combination in which upperBound values are greater than lowerBound values.
   # We can also make use of rsiWindow in it.
