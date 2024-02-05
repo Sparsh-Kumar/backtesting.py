@@ -1,16 +1,19 @@
 '''
-  - In this chapter, we will see how to plot heatmaps.
-  - We would be making use of seaborn along with matplotlib.
+  - In previous chapter we saw how to create heatmaps.
+  - But heatmap is basically a 2D figure, so how can we plot a third value ?.
+  - We can create heatmap for all possible variables using plot_heatmaps().
+  - The plot would get saved as a html file.
+  - You can see from the example code below, that rsiWindow is a range, not a single number anymore.
 '''
 
 import pandas_ta as ta
 import pandas as pd
-import seaborn as sns
+import os
 import matplotlib.pyplot as plt
 
 from backtesting import Backtest
 from backtesting import Strategy
-from backtesting.lib import crossover
+from backtesting.lib import crossover, plot_heatmaps
 from backtesting.test import GOOG
 
 class RsiOscillator(Strategy):
@@ -32,7 +35,7 @@ bt = Backtest(GOOG, RsiOscillator, cash=10000)
 stats, heatmap = bt.optimize(
   upperBound=range(55, 85, 5),
   lowerBound=range(10, 45, 5),
-  rsiWindow=14,
+  rsiWindow=range(10, 45, 5),
   maximize='Sharpe Ratio',
   # We are ensuring to only look the combination in which upperBound values are greater than lowerBound values.
   # We can also make use of rsiWindow in it.
@@ -42,14 +45,10 @@ stats, heatmap = bt.optimize(
   return_heatmap=True
   # max_tries = 100 # This option is very useful for avoiding overfitting, from all combinations I would randomly select 100 combinations (not all) & then give result according to that.
 )
+if not os.path.exists('plots'):
+  os.makedirs('plots')
+fileName = f"plot.html"
 
-print(heatmap)
-
-# Plotting heatmap
-hm = heatmap.groupby(['upperBound', 'lowerBound']).mean().unstack()
-
-# cmap is an optional argument which is basically a color theme for heat map.
-sns.heatmap(hm, cmap='viridis')
-plt.show()
-
+# We can also see the plot getting saved in location plots.
+plot_heatmaps(heatmap, agg='mean', filename=f"plots/{fileName}")
 
