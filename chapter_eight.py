@@ -23,6 +23,7 @@ class RsiOscillator(Strategy):
 
   def init(self):
     self.dailyRsi = self.I(ta.rsi, pd.Series(self.data.Close), self.rsiWindow)
+    # Here we are resamplng the rsi to calculate weekly rsi.
     self.weeklyRsi = resample_apply(
       'W', ta.rsi, self.data.Close, self.rsiWindow
     )
