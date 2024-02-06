@@ -29,7 +29,12 @@ class RsiOscillator(Strategy):
 
   def next(self):
 
-    # Here we are using barsince
+    # Here we are using barssince
+    # Here the logic of barssince is
+    # barssince(self.dailyRsi < self.upperBound) gives us the number of candles before which this condition was last seen.
+    # and we are equating the above by 3, so technically we are saying that
+    # Sell if (current rsi is above the upper bound value) && (there must be 3 candles before which the condition(rsi < upperbound)) is met.
+    # So the rsi should be above upperbound for sometime.
     if (self.dailyRsi[-1] > self.upperBound) and (barssince(self.dailyRsi < self.upperBound) == 3):
       self.position.close()
 
